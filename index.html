@@ -1,0 +1,1055 @@
+<!DOCTYPE html>
+<html lang="es" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cartilla Pausas Activas - Instrumentación</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                    },
+                    colors: {
+                        brand: {
+                            dark: '#0f172a',
+                            primary: '#1d4ed8',
+                            secondary: '#f59e0b',
+                            light: '#f8fafc',
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        .glass-card {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+        }
+        .gradient-text {
+            background: linear-gradient(to right, #3b82f6, #14b8a6);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+    </style>
+</head>
+<body class="bg-brand-light text-slate-800 font-sans antialiased selection:bg-brand-secondary selection:text-brand-dark">
+
+    <header class="relative bg-brand-dark text-white overflow-hidden">
+        <img src="https://images.unsplash.com/photo-1581092160562-40aa08e78837?ixlib=rb-4.0.3&auto=format&fit=crop&w=1920&q=80" alt="Fondo Industrial" class="absolute inset-0 w-full h-full object-cover mix-blend-overlay opacity-25" onerror="this.src='https://placehold.co/1920x1080/0f172a/ffffff?text=Fondo+Industrial'">
+        
+        <div class="absolute inset-0 opacity-50">
+            <div class="absolute inset-0 bg-[radial-gradient(circle_at_center,_var(--tw-gradient-stops))] from-slate-700/50 via-brand-dark to-brand-dark"></div>
+        </div>
+        <div class="relative max-w-7xl mx-auto px-6 py-24 sm:py-32 lg:px-8 flex flex-col items-center text-center">
+            <div class="absolute top-6 right-6 z-30 flex gap-2">
+                <button onclick="sharePage()" class="bg-white/10 hover:bg-white/20 text-white border border-white/20 px-4 py-2 rounded-full text-sm font-semibold backdrop-blur-md transition flex items-center shadow-lg">
+                    <i class="fas fa-share-nodes mr-2"></i> Compartir Cartilla
+                </button>
+                <button onclick="confirmClearMedia()" class="bg-white/10 hover:bg-white/20 text-white border border-white/20 px-4 py-2 rounded-full text-sm font-semibold backdrop-blur-md transition flex items-center shadow-lg" title="Borra las imágenes y videos que has subido en este navegador">
+                    <i class="fas fa-trash mr-2"></i> Borrar multimedia
+                </button>
+            </div>
+            
+            <div class="inline-flex items-center space-x-2 bg-brand-primary/30 text-blue-200 px-4 py-2 rounded-full mb-8 text-sm font-semibold border border-brand-primary/50 shadow-lg backdrop-blur-sm">
+                <span>SENA - Centro Minero</span>
+            </div>
+            <h1 class="text-4xl md:text-6xl font-extrabold tracking-tight mb-6">
+                Pausas Activas y <span class="text-brand-secondary">Ergonomía</span>
+            </h1>
+            <p class="text-xl md:text-2xl text-slate-300 mb-2 max-w-3xl font-light">
+                Optimizando nuestro cuerpo, controlando nuestro entorno.
+            </p>
+            
+            <div class="mt-12 bg-white/10 backdrop-blur-sm border border-white/20 rounded-2xl p-8 max-w-2xl w-full text-left shadow-2xl">
+                <div class="mb-4">
+                    <span class="block text-brand-secondary text-sm font-bold uppercase tracking-wider mb-1">Programa de Formación</span>
+                    <h2 class="text-xl md:text-2xl font-semibold text-white">Implementación y mantenimiento en sistemas de instrumentación y control de procesos industriales</h2>
+                </div>
+                <div class="flex items-center space-x-3 mt-6 pt-6 border-t border-white/20">
+                    <div class="bg-brand-primary rounded-lg p-3">
+                        <i class="fas fa-id-card text-2xl"></i>
+                    </div>
+                    <div>
+                        <span class="block text-slate-400 text-sm">Número de Ficha</span>
+                        <span class="text-2xl font-bold text-white">3238171</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="absolute bottom-0 w-full overflow-hidden leading-none rotate-180">
+            <svg class="relative block w-full h-12" data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 120" preserveAspectRatio="none">
+                <path d="M321.39,56.44c58-10.79,114.16-30.13,172-41.86,82.39-16.72,168.19-17.73,250.45-.39C823.78,31,906.67,72,985.66,92.83c70.05,18.48,146.53,26.09,214.34,3V0H0V27.35A600.21,600.21,0,0,0,321.39,56.44Z" class="fill-brand-light"></path>
+            </svg>
+        </div>
+    </header>
+
+    <main class="max-w-7xl mx-auto px-6 py-16 sm:px-8">
+        
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-12 mb-20">
+            
+            <!-- Autores -->
+            <div class="lg:col-span-1 bg-white rounded-2xl shadow-xl shadow-slate-200/50 border-t-4 border-brand-secondary overflow-hidden relative flex flex-col">
+                <div class="h-28 w-full relative">
+                    <div class="absolute inset-0 bg-slate-800/50 mix-blend-multiply z-10"></div>
+                    <img src="https://images.unsplash.com/photo-1503387762-592deb58ef4e?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" alt="Arquitectura Industrial" class="w-full h-full object-cover" onerror="this.src='https://placehold.co/600x300/1e293b/ffffff?text=Industrial'">
+                    <div class="absolute bottom-3 left-4 z-20 text-white font-bold text-sm tracking-wider uppercase opacity-80">
+                        Equipo de Trabajo
+                    </div>
+                </div>
+                <div class="p-8 pt-6 flex-grow flex flex-col">
+                    <h3 class="text-2xl font-bold text-slate-800 mb-6 flex items-center">
+                        <i class="fas fa-users text-brand-primary mr-3"></i> Autores
+                    </h3>
+                    <ul class="space-y-4 mb-8">
+                        <li class="flex items-center text-base font-medium text-slate-700">
+                            <div class="w-10 h-10 rounded-full bg-slate-100 flex-shrink-0 flex items-center justify-center mr-4 text-brand-primary shadow-sm border border-slate-200">
+                                <i class="fas fa-user-gear"></i>
+                            </div>
+                            Keyner Alexis Sanabria Villamizar
+                        </li>
+                        <li class="flex items-center text-base font-medium text-slate-700">
+                            <div class="w-10 h-10 rounded-full bg-slate-100 flex-shrink-0 flex items-center justify-center mr-4 text-brand-primary shadow-sm border border-slate-200">
+                                <i class="fas fa-user-gear"></i>
+                            </div>
+                            Keiner Stiven Rincon Daza
+                        </li>
+                    </ul>
+                    <div class="bg-amber-50 rounded-xl p-5 border border-amber-100 relative mt-auto">
+                        <i class="fas fa-quote-left text-amber-200 text-4xl absolute top-3 right-4 opacity-50"></i>
+                        <p class="text-amber-900 font-medium italic relative z-10 leading-relaxed text-sm">
+                            "Calibrando nuestro cuerpo para mantener el control: La prevención es nuestra mejor herramienta."
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Introducción -->
+            <div class="lg:col-span-2 flex flex-col justify-center">
+                <h2 class="text-3xl font-bold text-slate-800 mb-6 border-b-2 border-slate-200 pb-4 flex items-center">
+                    <i class="fas fa-industry text-brand-secondary mr-3"></i> Introducción a nuestro entorno
+                </h2>
+                
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
+                    <div class="prose prose-lg text-slate-600 space-y-4">
+                        <p>
+                            En el campo de la <strong>Implementación y Mantenimiento en Sistemas de Instrumentación y Control de Procesos Industriales</strong>, nuestro cuerpo y mente son las herramientas principales. Diariamente nos enfrentamos a desafíos que exigen alta precisión: desde el cableado de tableros de control y la calibración de válvulas y transmisores, hasta largas jornadas frente a pantallas SCADA e interfaces HMI.
+                        </p>
+                        <p>
+                            Estas tareas a menudo implican movimientos repetitivos de manos y muñecas, posturas sostenidas en espacios confinados de planta, y una alta exigencia visual y mental. La <strong>ergonomía</strong> y las <strong>pausas activas</strong> no son solo requisitos de salud ocupacional; son prácticas fundamentales que garantizan nuestra seguridad, previenen trastornos musculoesqueléticos y aseguran que mantengamos la concentración y precisión necesarias para evitar fallas en los procesos industriales.
+                        </p>
+                        <p class="font-medium text-brand-primary">
+                            Esta cartilla es una guía práctica diseñada específicamente para las labores del instrumentista. Al integrar estas posturas y ejercicios en nuestra rutina diaria, aseguramos una mayor vida útil para nuestra herramienta más valiosa: nosotros mismos.
+                        </p>
+                    </div>
+                    
+                    <div class="relative rounded-2xl overflow-hidden shadow-xl shadow-brand-primary/20 group h-full min-h-[300px]">
+                        <div class="absolute inset-0 bg-brand-primary/10 mix-blend-multiply z-10 transition-opacity group-hover:opacity-0 duration-300"></div>
+                        <img src="https://images.unsplash.com/photo-1581092335397-9583eb92d232?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="Técnico de instrumentación trabajando" class="absolute inset-0 w-full h-full object-cover transform group-hover:scale-105 transition-transform duration-700" onerror="this.src='https://placehold.co/800x600/1d4ed8/ffffff?text=Instrumentacion'">
+                        <div class="absolute bottom-4 left-4 right-4 z-20 bg-white/95 backdrop-blur-sm p-4 rounded-xl text-sm font-semibold text-slate-800 flex items-center shadow-lg border-l-4 border-brand-secondary">
+                            <i class="fas fa-clipboard-check text-brand-primary mr-3 text-2xl"></i>
+                            Mantener el control de los procesos empieza cuidando de nosotros mismos.
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="flex flex-wrap justify-center gap-4 mb-16">
+            <a href="#fisica" class="bg-white hover:bg-slate-50 text-slate-700 font-semibold py-3 px-6 rounded-full shadow-md transition duration-300 border border-slate-200 flex items-center">
+                <i class="fas fa-running text-green-500 mr-2"></i> Pausas Físicas
+            </a>
+            <a href="#posturas" class="bg-white hover:bg-slate-50 text-slate-700 font-semibold py-3 px-6 rounded-full shadow-md transition duration-300 border border-slate-200 flex items-center">
+                <i class="fas fa-chair text-blue-500 mr-2"></i> Posturas Ergonómicas
+            </a>
+            <a href="#cerebral" class="bg-white hover:bg-slate-50 text-slate-700 font-semibold py-3 px-6 rounded-full shadow-md transition duration-300 border border-slate-200 flex items-center">
+                <i class="fas fa-puzzle-piece text-purple-500 mr-2"></i> Gimnasia Cerebral
+            </a>
+            <a href="#conclusiones" class="bg-white hover:bg-slate-50 text-slate-700 font-semibold py-3 px-6 rounded-full shadow-md transition duration-300 border border-slate-200 flex items-center">
+                <i class="fas fa-check-circle text-teal-500 mr-2"></i> Conclusiones
+            </a>
+            <button onclick="sharePage()" class="bg-brand-primary hover:bg-blue-800 text-white font-semibold py-3 px-6 rounded-full shadow-md transition duration-300 flex items-center">
+                <i class="fas fa-share-nodes mr-2"></i> Compartir
+            </button>
+        </div>
+
+        <section id="fisica" class="mb-24 scroll-mt-8">
+            <div class="text-center mb-12">
+                <span class="inline-block p-4 rounded-full bg-green-100 text-green-600 mb-4 shadow-sm">
+                    <i class="fas fa-person-walking text-3xl"></i>
+                </span>
+                <h2 class="text-3xl font-bold text-slate-800 mb-4">Pausas Activas Físicas (10 Ejercicios)</h2>
+                <p class="text-slate-500 max-w-2xl mx-auto">Prevención de lesiones musculoesqueléticas durante el uso de herramientas, calibración y recorridos en planta.</p>
+            </div>
+            <div id="grid-fisica" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8"></div>
+        </section>
+
+        <section id="posturas" class="mb-24 scroll-mt-8">
+            <div class="text-center mb-12">
+                <span class="inline-block p-4 rounded-full bg-blue-100 text-blue-600 mb-4 shadow-sm">
+                    <i class="fas fa-ruler-combined text-3xl"></i>
+                </span>
+                <h2 class="text-3xl font-bold text-slate-800 mb-4">Posturas Ergonómicas (10 Posturas)</h2>
+                <p class="text-slate-500 max-w-2xl mx-auto">Técnicas correctas de posicionamiento del cuerpo para interactuar con gabinetes, herramientas y estaciones de control.</p>
+            </div>
+            <div id="grid-posturas" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8"></div>
+        </section>
+
+        <section id="cerebral" class="mb-24 scroll-mt-8">
+            <div class="text-center mb-12">
+                <span class="inline-block p-4 rounded-full bg-purple-100 text-purple-600 mb-4 shadow-sm">
+                    <i class="fas fa-puzzle-piece text-3xl"></i>
+                </span>
+                <h2 class="text-3xl font-bold text-slate-800 mb-4">Gimnasia Cerebral (Juegos Interactivos)</h2>
+                <p class="text-slate-500 max-w-2xl mx-auto">Stimula tu agilidad mental y agudeza cognitiva con minijuegos diseñados para instrumentistas antes de tareas complejas.</p>
+            </div>
+            
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-8">
+                <!-- JUEGO 1: Memoria de Símbolos Técnicos (Match) -->
+                <div class="bg-white rounded-2xl shadow-xl border border-purple-100 p-6 sm:p-8 flex flex-col">
+                    <div class="flex items-center justify-between mb-4">
+                        <div>
+                            <span class="text-xs font-bold uppercase tracking-wider text-purple-600 bg-purple-50 px-3 py-1 rounded-full border border-purple-200">Reto Cognitivo 1</span>
+                            <h3 class="text-xl font-bold text-slate-800 mt-2">Memoria de Instrumentación P&ID</h3>
+                        </div>
+                        <div class="text-right">
+                            <span class="text-xs text-slate-500 block">Parejas Encontradas</span>
+                            <span id="score-match" class="text-2xl font-extrabold text-purple-600">0 / 6</span>
+                        </div>
+                    </div>
+                    <p class="text-sm text-slate-600 mb-6">Encuentra las parejas correctas de símbolos y elementos de control en el tablero.</p>
+                    
+                    <div id="match-board" class="grid grid-cols-4 gap-3 mb-6"></div>
+                    
+                    <div class="mt-auto flex justify-between items-center pt-4 border-t border-slate-100">
+                        <span id="match-status" class="text-sm font-semibold text-slate-600">Estado: ¡Listo para jugar!</span>
+                        <button onclick="initMatchGame()" class="bg-purple-600 hover:bg-purple-700 text-white font-bold py-2 px-4 rounded-xl text-sm transition shadow-md">
+                            Reiniciar Juego
+                        </button>
+                    </div>
+                </div>
+
+                <!-- JUEGO 2: Cálculo Rápido de Lazo de Control (4-20mA) -->
+                <div class="bg-white rounded-2xl shadow-xl border border-purple-100 p-6 sm:p-8 flex flex-col">
+                    <div class="flex items-center justify-between mb-4">
+                        <div>
+                            <span class="text-xs font-bold uppercase tracking-wider text-purple-600 bg-purple-50 px-3 py-1 rounded-full border border-purple-200">Reto Cognitivo 2</span>
+                            <h3 class="text-xl font-bold text-slate-800 mt-2">Agilidad 4-20mA (Cálculo Rápido)</h3>
+                        </div>
+                        <div class="text-right">
+                            <span class="text-xs text-slate-500 block">Aciertos</span>
+                            <span id="score-calc" class="text-2xl font-extrabold text-purple-600">0 / 5</span>
+                        </div>
+                    </div>
+                    <p class="text-sm text-slate-600 mb-6">Selecciona el valor de corriente (mA) correspondiente al porcentaje de span dado en el lazo.</p>
+                    
+                    <div id="calc-container" class="bg-slate-50 rounded-xl p-6 border border-slate-200 mb-6 flex-grow flex flex-col justify-center">
+                        <div class="text-center mb-4">
+                            <span class="text-xs font-bold text-slate-400 uppercase">Porcentaje del Span</span>
+                            <div id="calc-question" class="text-3xl font-extrabold text-slate-800 mt-1">50%</div>
+                        </div>
+                        <div id="calc-options" class="grid grid-cols-2 gap-3"></div>
+                    </div>
+                    
+                    <div class="mt-auto flex justify-between items-center pt-4 border-t border-slate-100">
+                        <span id="calc-status" class="text-sm font-semibold text-slate-600">Selecciona la respuesta correcta</span>
+                        <button onclick="nextCalcGame()" id="calc-btn-next" class="hidden bg-purple-600 hover:bg-purple-700 text-white font-bold py-2 px-4 rounded-xl text-sm transition shadow-md">
+                            Siguiente Pregunta
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- JUEGOS 3 y 4 -->
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+                <!-- JUEGO 3: Secuencia de Diagnóstico de Válvulas -->
+                <div class="bg-white rounded-2xl shadow-xl border border-purple-100 p-6 sm:p-8 flex flex-col">
+                    <div class="flex items-center justify-between mb-4">
+                        <div>
+                            <span class="text-xs font-bold uppercase tracking-wider text-purple-600 bg-purple-50 px-3 py-1 rounded-full border border-purple-200">Reto Cognitivo 3</span>
+                            <h3 class="text-xl font-bold text-slate-800 mt-2">Secuencia de Diagnóstico de Válvula</h3>
+                        </div>
+                        <div class="text-right">
+                            <span class="text-xs text-slate-500 block">Nivel / Aciertos</span>
+                            <span id="score-seq" class="text-2xl font-extrabold text-purple-600">0 / 4</span>
+                        </div>
+                    </div>
+                    <p class="text-sm text-slate-600 mb-6">Memoriza y repite el orden correcto de los pasos de mantenimiento preventivo de una válvula de control.</p>
+                    
+                    <div id="seq-container" class="bg-slate-50 rounded-xl p-6 border border-slate-200 mb-6 flex-grow flex flex-col justify-center items-center">
+                        <div id="seq-display-msg" class="text-center font-bold text-slate-700 mb-4 text-lg">Presiona Iniciar para ver la secuencia</div>
+                        <div id="seq-buttons" class="grid grid-cols-2 gap-3 w-full">
+                            <button onclick="clickSeqBtn(0)" class="p-4 bg-blue-100 text-blue-800 font-bold rounded-xl border border-blue-200 hover:bg-blue-200 transition">1. Aislar Lazo</button>
+                            <button onclick="clickSeqBtn(1)" class="p-4 bg-green-100 text-green-800 font-bold rounded-xl border border-green-200 hover:bg-green-200 transition">2. Descargar Presión</button>
+                            <button onclick="clickSeqBtn(2)" class="p-4 bg-amber-100 text-amber-800 font-bold rounded-xl border border-amber-200 hover:bg-amber-200 transition">3. Calibrar Posición</button>
+                            <button onclick="clickSeqBtn(3)" class="p-4 bg-purple-100 text-purple-800 font-bold rounded-xl border border-purple-200 hover:bg-purple-200 transition">4. Pruebas de Fuga</button>
+                        </div>
+                    </div>
+                    
+                    <div class="mt-auto flex justify-between items-center pt-4 border-t border-slate-100">
+                        <span id="seq-status" class="text-sm font-semibold text-slate-600">Estado: Esperando inicio</span>
+                        <button onclick="startSeqGame()" class="bg-purple-600 hover:bg-purple-700 text-white font-bold py-2 px-4 rounded-xl text-sm transition shadow-md">
+                            Iniciar Secuencia
+                        </button>
+                    </div>
+                </div>
+
+                <!-- JUEGO 4: Trivia Rápida de Instrumentación y Normas -->
+                <div class="bg-white rounded-2xl shadow-xl border border-purple-100 p-6 sm:p-8 flex flex-col">
+                    <div class="flex items-center justify-between mb-4">
+                        <div>
+                            <span class="text-xs font-bold uppercase tracking-wider text-purple-600 bg-purple-50 px-3 py-1 rounded-full border border-purple-200">Reto Cognitivo 4</span>
+                            <h3 class="text-xl font-bold text-slate-800 mt-2">Trivia Express de Instrumentación</h3>
+                        </div>
+                        <div class="text-right">
+                            <span class="text-xs text-slate-500 block">Puntaje</span>
+                            <span id="score-trivia" class="text-2xl font-extrabold text-purple-600">0 / 4</span>
+                        </div>
+                    </div>
+                    <p class="text-sm text-slate-600 mb-6">Responde correctamente preguntas clave sobre instrumentación industrial, sensores y normativas.</p>
+                    
+                    <div id="trivia-container" class="bg-slate-50 rounded-xl p-6 border border-slate-200 mb-6 flex-grow flex flex-col justify-center">
+                        <div id="trivia-question" class="text-base font-bold text-slate-800 mb-4">Pregunta de prueba...</div>
+                        <div id="trivia-options" class="space-y-2"></div>
+                    </div>
+                    
+                    <div class="mt-auto flex justify-between items-center pt-4 border-t border-slate-100">
+                        <span id="trivia-status" class="text-sm font-semibold text-slate-600">Selecciona una opción</span>
+                        <button onclick="nextTriviaQuestion()" id="trivia-btn-next" class="hidden bg-purple-600 hover:bg-purple-700 text-white font-bold py-2 px-4 rounded-xl text-sm transition shadow-md">
+                            Siguiente Pregunta
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="conclusiones" class="mb-16 scroll-mt-8">
+            <div class="text-center mb-12">
+                <span class="inline-block p-4 rounded-full bg-teal-100 text-teal-600 mb-4 shadow-sm">
+                    <i class="fas fa-check-circle text-3xl"></i>
+                </span>
+                <h2 class="text-3xl font-bold text-slate-800 mb-4">Conclusiones</h2>
+                
+                <div class="max-w-5xl mx-auto bg-white rounded-2xl shadow-xl shadow-slate-200/50 overflow-hidden border-t-4 border-teal-500 text-left relative flex flex-col md:flex-row">
+                    <div class="md:w-1/3 relative hidden md:block">
+                        <div class="absolute inset-0 bg-teal-900/40 mix-blend-multiply z-10"></div>
+                        <img src="https://images.unsplash.com/photo-1504917595217-d4dc5ebe6122?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="Estructura industrial" class="w-full h-full object-cover" onerror="this.src='https://placehold.co/800x800/0f766e/ffffff?text=Conclusiones'">
+                        <div class="absolute inset-0 z-20 bg-gradient-to-r from-transparent to-white"></div>
+                    </div>
+                    
+                    <div class="md:w-2/3 p-8 md:p-12 relative overflow-hidden">
+                        <div class="absolute top-0 right-0 opacity-10 text-teal-500 transform translate-x-1/4 -translate-y-1/4">
+                            <i class="fas fa-quote-right text-9xl"></i>
+                        </div>
+                        <div class="prose prose-lg text-slate-600 space-y-4 relative z-10">
+                            <p>La implementación de pausas activas, prácticas ergonómicas y juegos cerebrales en la <strong>instrumentación y control de procesos industriales</strong> no es simplemente un requisito de salud ocupacional, sino una necesidad operativa y humana. A través de esta cartilla, hemos destacado que cuidar nuestro cuerpo y mente garantiza el bienestar y un mayor nivel de precisión en nuestro entorno laboral.</p>
+                            <ul class="list-none space-y-5 mt-8 text-slate-700">
+                                <li class="flex items-start">
+                                    <i class="fas fa-shield-alt text-teal-500 mt-1 mr-4 text-2xl"></i>
+                                    <div><strong>Prevención Integral:</strong> La combinación de ejercicios físicos y juegos mentales previene trastornos musculoesqueléticos, alivia la fatiga visual generada por monitoreo SCADA y mantiene alta agilidad mental.</div>
+                                </li>
+                                <li class="flex items-start">
+                                    <i class="fas fa-sliders-h text-teal-500 mt-1 mr-4 text-2xl"></i>
+                                    <div><strong>Adaptación al Entorno:</strong> Las posturas ergonómicas específicas para cableado en gabinetes, configuración de transmisores y trabajos en campo mitigan los riesgos de las posturas prolongadas.</div>
+                                </li>
+                                <li class="flex items-start">
+                                    <i class="fas fa-sync-alt text-teal-500 mt-1 mr-4 text-2xl"></i>
+                                    <div><strong>Compromiso Continuo:</strong> La constancia en la aplicación de estiramientos, descanso visual y agilidad cognitiva es el pilar para extender nuestra vida útil laboral sin comprometer la salud.</div>
+                                </li>
+                            </ul>
+                            <div class="mt-10 pt-8 border-t border-slate-100 text-center">
+                                <p class="font-bold text-teal-700 text-xl md:text-2xl italic leading-relaxed">"La seguridad y la eficiencia en el control de procesos comienzan calibrando nuestro propio cuerpo y cuidando de nosotros mismos."</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="bg-slate-900 text-slate-400 py-10 text-center border-t border-slate-800">
+        <div class="max-w-7xl mx-auto px-6 flex flex-col sm:flex-row items-center justify-between gap-4">
+            <div class="text-left">
+                <p class="mb-1 text-white font-medium">© 2026 Cartilla de Ergonomía e Instrumentación Industrial.</p>
+                <p class="text-sm">Creado por Keyner Sanabria y Keiner Rincon | Ficha: 3238171</p>
+            </div>
+            <div>
+                <button onclick="sharePage()" class="bg-brand-primary hover:bg-blue-700 text-white font-semibold py-2.5 px-6 rounded-xl transition flex items-center shadow-md">
+                    <i class="fas fa-share-nodes mr-2"></i> Compartir esta Cartilla
+                </button>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        const dataFisicas = [
+            { id: "f1", title: "1. Flexores de Muñeca", subtitle: "Para uso de herramientas", step: "Extiende un brazo hacia adelante con la palma hacia arriba. Con la otra mano, tira suavemente de los dedos hacia el suelo y hacia ti.", benefits: "Previene el Síndrome del Túnel Carpiano causado por pinzas y destornilladores.", frequency: "2 a 3 veces por turno", time: "15 seg/mano", space: "Cualquier área", imgParams: "600x400/10b981/ffffff?text=Flexores+Muneca", hasVideo: true },
+            { id: "f2", title: "2. Extensores de Muñeca", subtitle: "Relajación post-escritura", step: "Extiende el brazo hacia adelante con el dorso hacia arriba. Empuja suavemente el dorso hacia abajo y hacia ti.", benefits: "Relaja músculos tras escribir en PC o manipular perillas de calibración.", frequency: "2 a 3 veces por turno", time: "15 seg/mano", space: "Cualquier área", imgParams: "600x400/10b981/ffffff?text=Extensores+Muneca", hasVideo: true },
+            { id: "f3", title: "3. Rotación de Cuello", subtitle: "Prevención cervical", step: "Lleva barbilla al pecho. Inclina acercando la oreja al hombro derecho (ayúdate con la mano). Repite al lado izquierdo.", benefits: "Alivia tensión cervical por mirar bandejas arriba o planos abajo.", frequency: "Cada 2 horas", time: "30 seg total", space: "Lugar seguro", imgParams: "600x400/10b981/ffffff?text=Rotacion+Cuello", hasVideo: true },
+            { id: "f4", title: "4. Apertura de Pectorales", subtitle: "Corrección de postura", step: "Entrelaza manos tras la espalda, mantenla recta, eleva brazos suavemente hacia atrás sacando pecho.", benefits: "Contrarresta la postura encorvada al trabajar en gabinetes de control.", frequency: "2 veces por turno", time: "15 a 20 seg", space: "Área despejada", imgParams: "600x400/10b981/ffffff?text=Apertura+Pectorales", hasVideo: true },
+            { id: "f5", title: "5. Torsión de Tronco", subtitle: "Flexibilidad espalda media", step: "Gira el torso lentamente a la derecha mirando por encima del hombro. Cadera al frente. Repite izquierda.", benefits: "Mejora flexibilidad de columna para trabajos cerca de tuberías.", frequency: "1 a 2 veces por turno", time: "10 seg/lado", space: "Silla o área libre", imgParams: "600x400/10b981/ffffff?text=Torsion+Tronco", hasVideo: true },
+            { id: "f6", title: "6. Estiramiento Lumbar", subtitle: "Alivio espalda baja", step: "Manos en zona lumbar, empuja pelvis adelante arqueando la espalda ligeramente hacia atrás.", benefits: "Alivia dolor por inclinarse sobre mesas o transmisores en campo.", frequency: "Cada 3 horas", time: "15 segundos", space: "Lugar seguro", imgParams: "600x400/10b981/ffffff?text=Estiramiento+Lumbar", hasVideo: true },
+            { id: "f7", title: "7. Cuádriceps y Piernas", subtitle: "Recuperación tras caminatas", step: "Apóyate en pared. Dobla rodilla hacia atrás, sujeta tobillo llevando talón al glúteo. Alternar.", benefits: "Reduce fatiga tras caminatas por planta o tiempos de pie.", frequency: "2 veces por turno", time: "15 seg/pierna", space: "Cerca de pared", imgParams: "600x400/10b981/ffffff?text=Cuadriceps", hasVideo: true },
+            { id: "f8", title: "8. Activación Circulatoria", subtitle: "Bombeo venoso", step: "Elévate sobre las puntas de los pies y baja lentamente. Repite el movimiento rítmicamente.", benefits: "Activa la bomba muscular, previniendo várices por estar de pie en campo.", frequency: "2 a 3 veces/día", time: "15 repeticiones", space: "Lugar plano", imgParams: "600x400/10b981/ffffff?text=Activacion+Circulatoria", hasVideo: true },
+            { id: "f9", title: "9. Movilidad Articular Dedos", subtitle: "Anti-agarrotamiento", step: "Abre manos extendiendo dedos al máximo (estrella) 3 seg. Cierra apretando puño 3 seg.", benefits: "Libera rigidez tras sujetar multímetros o herramientas pequeñas.", frequency: "Constantemente", time: "10 repeticiones", space: "Cualquier lugar", imgParams: "600x400/10b981/ffffff?text=Movilidad+Dedos", hasVideo: true },
+            { id: "f10", title: "10. Pausa Visual (20-20-20)", subtitle: "Descanso ocular SCADA", step: "Cada 20 min de pantalla, mira un objeto a 20 pies (6 metros) por 20 segundos. Parpadea.", benefits: "Previene fatiga ocular, resequedad y visión borrosa.", frequency: "Cada 20 min", time: "20 segundos", space: "Puesto de control", imgParams: "600x400/10b981/ffffff?text=Pausa+Visual", hasVideo: true }
+        ];
+
+        const dataPosturas = [
+            { id: "p1", title: "1. Frente a Pantalla SCADA", subtitle: "Estación de operación", step: "Monitor a nivel de ojos, a un brazo de distancia. Espalda apoyada. Pies en suelo o reposapiés. Rodillas a 90°.", benefits: "Previene dolores cervicales, lumbares y fatiga visual en monitoreo.", frequency: "Permanente", time: "Turno completo", space: "Sala de control", imgParams: "600x400/3b82f6/ffffff?text=Pantalla+SCADA", hasVideo: false },
+            { id: "p2", title: "2. Gabinetes Eléctricos", subtitle: "Trabajo a nivel del pecho", step: "Acércate al tablero. Espalda recta. Usa reposapiés para alternar el peso. Brazos no deben superar hombros.", benefits: "Reduce carga lumbar y evita tendinitis en hombros.", frequency: "Al cablear/configurar", time: "Intermitente", space: "Frente a gabinetes", imgParams: "600x400/3b82f6/ffffff?text=Gabinetes+Control", hasVideo: false },
+            { id: "p3", title: "3. Equipos a Nivel Suelo", subtitle: "Válvulas e instrumentos bajos", step: "NUNCA dobles la cintura con piernas rectas. Dobla rodillas o apoya una rodilla (usa rodillera). Tronco vertical.", benefits: "Protege discos de hernias y reduce fatiga lumbar.", frequency: "Al calibrar abajo", time: "Max 10 min seguidos", space: "En campo", imgParams: "600x400/3b82f6/ffffff?text=Nivel+Suelo", hasVideo: false },
+            { id: "p4", title: "4. Levantamiento Seguro", subtitle: "Manejo de cargas", step: "Pies separados, en cuclillas, agarra el equipo firme, espalda recta y levanta con fuerza de piernas, carga al cuerpo.", benefits: "Evita desgarros y lesiones graves en columna.", frequency: "Cargas > 3 kg", time: "N/A", space: "Almacén/Planta", imgParams: "600x400/3b82f6/ffffff?text=Levantamiento+Seguro", hasVideo: false },
+            { id: "p5", title: "5. Herramientas Manuales", subtitle: "Pinzas y alicates", step: "Muñeca neutra (recta). No dobles al aplicar fuerza, acompaña con el brazo. Usa mangos aislados y ergonómicos.", benefits: "Previene inflamación de tendones y túnel carpiano.", frequency: "Constante", time: "Durante la labor", space: "Mantenimiento", imgParams: "600x400/3b82f6/ffffff?text=Uso+Herramientas", hasVideo: false },
+            {
+    id: "p6",
+    title: "6. Trabajo de Pie en Campo",
+    subtitle: "Inspección y calibración",
+    step: "Mantén la espalda recta, los hombros relajados y el peso distribuido entre ambos pies. Evita permanecer inmóvil durante mucho tiempo y alterna el apoyo de las piernas. Cuando sea posible, cambia de posición o realiza pequeños desplazamientos.",
+    benefits: "Reduce la fatiga muscular, disminuye la sobrecarga lumbar y favorece una postura adecuada durante recorridos, inspecciones y calibraciones en planta.",
+    frequency: "Durante trabajos en campo",
+    time: "Alternar cada 30 a 60 min",
+    space: "Áreas de planta",
+    imgParams: "600x400/3b82f6/ffffff?text=Trabajo+Pie+Campo",
+    hasVideo: false
+},
+            { id: "p7", title: "7. Multímetro en Campo", subtitle: "Mediciones (Loop Test)", step: "No sostengas equipo pesado al aire. Usa correas magnéticas para colgarlo en el panel. Trabaja manos libres.", benefits: "Evita sobrecarga estática en brazo, hombro y cuello.", frequency: "Pruebas de lazo", time: "Durante la prueba", space: "Tableros de campo", imgParams: "600x400/3b82f6/ffffff?text=Uso+Multimetro", hasVideo: false },
+            { id: "p8", title: "8. Transporte de Herramientas", subtitle: "Desplazamientos", step: "Usa mochilas de dos tiras ajustadas o con ruedas. Si usas cinturón, distribuye peso equitativamente.", benefits: "Previene escoliosis postural y dolores de hombro.", frequency: "Traslados a planta", time: "Recorridos", space: "Desplazamientos", imgParams: "600x400/3b82f6/ffffff?text=Transporte+Herramientas", hasVideo: false },
+            { id: "p9", title: "9. Iluminación y Precisión", subtitle: "Micro-soldadura", step: "Luz directa sin hacer sombra. Si es pobre, usa linternas de cabeza (frontales) para no forzar cuello ('tortuga').", benefits: "Evita posturas forzadas del cuello y espalda alta.", frequency: "Trabajos de precisión", time: "Variable", space: "Taller/Áreas oscuras", imgParams: "600x400/3b82f6/ffffff?text=Iluminacion+Precision", hasVideo: false },
+            { id: "p10", title: "10. Uso del Mouse/Ratón", subtitle: "Estaciones de Ingeniería", step: "Mouse cerca del teclado. Mano y antebrazo rectos apoyados. Pad con gel. Movimiento con antebrazo, no solo muñeca.", benefits: "Previene lesiones por movimientos repetitivos.", frequency: "Programación PLC/DCS", time: "Turno de ingeniería", space: "Oficina/Estación", imgParams: "600x400/3b82f6/ffffff?text=Uso+del+Mouse", hasVideo: false }
+        ];
+
+        function renderCards(containerId, dataArray, themeColor) {
+            const container = document.getElementById(containerId);
+            if (!container) return;
+
+            let badgeColors = 'bg-slate-100 text-slate-700 border-slate-200';
+            let btnColors = 'bg-slate-600 hover:bg-slate-700 ring-slate-300';
+
+            if (themeColor === 'green') {
+                badgeColors = 'bg-green-100 text-green-700 border-green-200';
+                btnColors = 'bg-green-600 hover:bg-green-700 ring-green-300';
+            } else if (themeColor === 'blue') {
+                badgeColors = 'bg-blue-100 text-blue-700 border-blue-200';
+                btnColors = 'bg-blue-600 hover:bg-blue-700 ring-blue-300';
+            }
+
+            let htmlString = '';
+            dataArray.forEach(item => {
+                // Primero intenta cargar una imagen real subida al repo en
+                // imagenes/<id>.jpg. Si no existe (404), el atributo
+                // onerror la reemplaza automáticamente por el placeholder.
+                const imgSrc = `imagenes/${item.id}.jpg`;
+                const imgFallback = `https://placehold.co/${item.imgParams}`;
+                htmlString += `
+                <div class="bg-white rounded-2xl shadow-lg border border-slate-100 overflow-hidden hover:shadow-2xl transition duration-300 flex flex-col group">
+                    <div class="relative w-full h-48 bg-slate-200 overflow-hidden group/img">
+                        <img id="img-${item.id}" src="${imgSrc}" alt="${item.title}" class="w-full h-full object-cover transition duration-500 group-hover/img:scale-105" data-base="imagenes/${item.id}" data-step="0" data-fallback="${imgFallback}" onerror="handleImgError(this)">
+                        <label for="upload-${item.id}" class="absolute inset-0 bg-slate-900/40 backdrop-blur-[2px] opacity-0 group-hover/img:opacity-100 flex items-center justify-center transition-all duration-300 cursor-pointer z-20">
+                            <div class="bg-white text-slate-800 px-4 py-2 rounded-lg font-semibold flex items-center shadow-lg transform translate-y-4 group-hover/img:translate-y-0 transition-transform duration-300">
+                                <i class="fas fa-upload mr-2 text-brand-primary"></i> Cambiar Imagen
+                            </div>
+                            <input type="file" id="upload-${item.id}" class="hidden" accept="image/*" onchange="updateCardImage(event, 'img-${item.id}')">
+                        </label>
+                        <div class="absolute top-4 right-4 bg-white/90 backdrop-blur px-3 py-1 rounded-full text-xs font-bold text-slate-700 shadow-sm flex items-center z-10 pointer-events-none tag-indicador">
+                            <i class="fas fa-camera mr-1"></i> Ilustrativa
+                        </div>
+                    </div>
+                    <div class="p-6 flex-grow flex flex-col">
+                        <div class="mb-4">
+                            <h3 class="text-xl font-bold text-slate-800 leading-tight mb-1">${item.title}</h3>
+                            <span class="text-sm font-medium text-slate-500">${item.subtitle}</span>
+                        </div>
+                        <div class="flex flex-wrap gap-2 mb-4 text-xs font-medium">
+                            <span class="px-2 py-1 rounded-md border ${badgeColors} flex items-center">
+                                <i class="fas fa-clock mr-1 opacity-70"></i> ${item.time}
+                            </span>
+                            <span class="px-2 py-1 rounded-md border ${badgeColors} flex items-center">
+                                <i class="fas fa-redo-alt mr-1 opacity-70"></i> ${item.frequency}
+                            </span>
+                            <span class="px-2 py-1 rounded-md border bg-slate-100 text-slate-600 border-slate-200 flex items-center w-full mt-1">
+                                <i class="fas fa-location-dot mr-1 opacity-70"></i> ${item.space}
+                            </span>
+                        </div>
+                        <div class="space-y-3 mb-6 flex-grow">
+                            <div>
+                                <h4 class="text-sm font-bold text-slate-900 uppercase tracking-wide mb-1">Paso a paso</h4>
+                                <p class="text-slate-600 text-sm leading-relaxed">${item.step}</p>
+                            </div>
+                            <div>
+                                <h4 class="text-sm font-bold text-slate-900 uppercase tracking-wide mb-1">Beneficios</h4>
+                                <p class="text-slate-600 text-sm leading-relaxed bg-slate-50 p-2 rounded border-l-2 border-${themeColor}-400">${item.benefits}</p>
+                            </div>
+                        </div>
+                        ${item.hasVideo !== false ? `
+                        <div class="mt-auto pt-4 border-t border-slate-100">
+                            <label for="video-${item.id}" class="w-full cursor-pointer inline-flex items-center justify-center gap-2 px-4 py-2.5 rounded-lg bg-slate-800 hover:bg-slate-900 text-white font-semibold text-sm transition">
+                                <i class="fas fa-video"></i> Adjuntar Video
+                            </label>
+                            <input type="file" id="video-${item.id}" class="hidden" accept="video/*" onchange="updateCardVideo(event, '${item.id}')">
+                            <div id="video-container-${item.id}" class="hidden mt-3 rounded-lg overflow-hidden bg-slate-900">
+                                <video id="video-${item.id}-preview" class="w-full max-h-56" controls playsinline preload="metadata" src="videos/${item.id}.mp4" data-base="videos/${item.id}" data-step="0" data-item-id="${item.id}" onloadedmetadata="showStaticVideo('${item.id}')" onerror="handleVideoError(this)"></video>
+                            </div>
+                            <p id="video-status-${item.id}" class="text-xs text-slate-500 text-center mt-2">Puedes adjuntar un video propio del ejercicio.</p>
+                        </div>` : ''}
+                    </div>
+                </div>`;
+            });
+            container.innerHTML = htmlString;
+        }
+
+        const matchSymbols = ['🌡️', '⚙️', '⚡', '🎛️', '💧', '📊'];
+        let matchCards = [];
+        let firstCard = null;
+        let lockBoard = false;
+        let matchedPairs = 0;
+
+        function initMatchGame() {
+            const board = document.getElementById('match-board');
+            matchedPairs = 0;
+            document.getElementById('score-match').innerText = `${matchedPairs} / 6`;
+            document.getElementById('match-status').innerText = "Estado: Encuentra las 6 parejas";
+            
+            let deck = [...matchSymbols, ...matchSymbols]
+                .sort(() => Math.random() - 0.5)
+                .map((symbol, index) => ({ id: index, symbol, flipped: false, matched: false }));
+            
+            matchCards = deck;
+            renderMatchBoard();
+        }
+
+        function renderMatchBoard() {
+            const board = document.getElementById('match-board');
+            board.innerHTML = '';
+            matchCards.forEach(card => {
+                const cardEl = document.createElement('div');
+                cardEl.className = `h-20 rounded-xl flex items-center justify-center text-3xl cursor-pointer transition-all duration-300 shadow-sm border ${
+                    card.flipped || card.matched ? 'bg-purple-50 border-purple-300' : 'bg-slate-100 border-slate-200 hover:bg-slate-200'
+                }`;
+                cardEl.innerHTML = card.flipped || card.matched ? card.symbol : '<i class="fas fa-question text-slate-400 text-lg"></i>';
+                cardEl.onclick = () => flipCard(card.id);
+                board.appendChild(cardEl);
+            });
+        }
+
+        function flipCard(id) {
+            if (lockBoard) return;
+            let clickedCard = matchCards.find(c => c.id === id);
+            if (clickedCard.flipped || clickedCard.matched) return;
+
+            clickedCard.flipped = true;
+            renderMatchBoard();
+
+            if (!firstCard) {
+                firstCard = clickedCard;
+            } else {
+                let secondCard = clickedCard;
+
+                if (firstCard.symbol === secondCard.symbol) {
+                    firstCard.matched = true;
+                    secondCard.matched = true;
+                    matchedPairs++;
+                    document.getElementById('score-match').innerText = `${matchedPairs} / 6`;
+                    firstCard = null;
+                    if (matchedPairs === matchSymbols.length) {
+                        document.getElementById('match-status').innerText = `¡Felicitaciones! Has completado todas las parejas 🎉`;
+                    }
+                } else {
+                    lockBoard = true;
+                    setTimeout(() => {
+                        firstCard.flipped = false;
+                        secondCard.flipped = false;
+                        firstCard = null;
+                        lockBoard = false;
+                        renderMatchBoard();
+                    }, 800);
+                }
+            }
+        }
+
+        const calcQuestions = [
+            { span: "0%", correct: "4 mA" },
+            { span: "25%", correct: "8 mA" },
+            { span: "50%", correct: "12 mA" },
+            { span: "75%", correct: "16 mA" },
+            { span: "100%", correct: "20 mA" }
+        ];
+        let currentCalcIndex = 0;
+        let calcScoreCount = 0;
+
+        function initCalcGame() {
+            currentCalcIndex = 0;
+            calcScoreCount = 0;
+            document.getElementById('score-calc').innerText = `${calcScoreCount} / ${calcQuestions.length}`;
+            loadCalcQuestion();
+        }
+
+        function loadCalcQuestion() {
+            if (currentCalcIndex >= calcQuestions.length) {
+                document.getElementById('calc-question').innerText = "¡Reto Finalizado!";
+                document.getElementById('calc-options').innerHTML = `<div class="col-span-2 text-center text-purple-700 font-bold py-4">Aciertos totales: ${calcScoreCount} / ${calcQuestions.length} 🏆</div>`;
+                document.getElementById('calc-status').innerText = "¡Excelente entrenamiento mental!";
+                document.getElementById('calc-btn-next').classList.add('hidden');
+                return;
+            }
+
+            const q = calcQuestions[currentCalcIndex];
+            document.getElementById('calc-question').innerText = `Span al ${q.span}`;
+            document.getElementById('calc-status').innerText = "Selecciona la corriente correcta del lazo";
+            document.getElementById('calc-btn-next').classList.add('hidden');
+
+            let allOptions = ["4 mA", "8 mA", "12 mA", "16 mA", "20 mA"];
+            let shuffledOptions = allOptions.sort(() => Math.random() - 0.5);
+
+            const optionsContainer = document.getElementById('calc-options');
+            optionsContainer.innerHTML = '';
+            shuffledOptions.forEach(opt => {
+                const btn = document.createElement('button');
+                btn.className = "py-3 bg-white hover:bg-purple-50 text-slate-700 border border-slate-200 rounded-xl font-bold transition shadow-sm";
+                btn.innerText = opt;
+                btn.onclick = () => checkCalcAnswer(opt, q.correct, btn);
+                optionsContainer.appendChild(btn);
+            });
+        }
+
+        function checkCalcAnswer(selected, correct, btnElement) {
+            const buttons = document.getElementById('calc-options').querySelectorAll('button');
+            buttons.forEach(b => b.disabled = true);
+
+            if (selected === correct) {
+                btnElement.className = "py-3 bg-green-600 text-white border border-green-600 rounded-xl font-bold transition shadow-md";
+                calcScoreCount++;
+                document.getElementById('calc-status').innerText = "¡Correcto! Excelente cálculo.";
+            } else {
+                btnElement.className = "py-3 bg-red-500 text-white border border-red-500 rounded-xl font-bold transition shadow-md";
+                document.getElementById('calc-status').innerText = `Incorrecto. La respuesta era ${correct}`;
+            }
+            document.getElementById('score-calc').innerText = `${calcScoreCount} / ${calcQuestions.length}`;
+            document.getElementById('calc-btn-next').classList.remove('hidden');
+        }
+
+        function nextCalcGame() {
+            currentCalcIndex++;
+            loadCalcQuestion();
+        }
+
+        let seqTarget = [];
+        let seqPlayer = [];
+        let isShowingSeq = false;
+
+        function startSeqGame() {
+            seqTarget = [];
+            seqPlayer = [];
+            generateNewSeq();
+        }
+
+        function generateNewSeq() {
+            seqTarget = [];
+            for(let i=0; i<3; i++) {
+                seqTarget.push(Math.floor(Math.random() * 4));
+            }
+            seqPlayer = [];
+            playSeqAnimation();
+        }
+
+        function playSeqAnimation() {
+            isShowingSeq = true;
+            document.getElementById('seq-status').innerText = "Memoriza la secuencia...";
+            let i = 0;
+            const buttons = document.getElementById('seq-buttons').querySelectorAll('button');
+            
+            buttons.forEach(b => b.disabled = true);
+
+            let interval = setInterval(() => {
+                buttons.forEach(b => b.classList.remove('ring-4', 'ring-purple-500', 'scale-105'));
+                if (i < seqTarget.length) {
+                    let activeBtn = buttons[seqTarget[i]];
+                    activeBtn.classList.add('ring-4', 'ring-purple-500', 'scale-105');
+                    i++;
+                } else {
+                    clearInterval(interval);
+                    buttons.forEach(b => b.classList.remove('ring-4', 'ring-purple-500', 'scale-105'));
+                    buttons.forEach(b => b.disabled = false);
+                    document.getElementById('seq-status').innerText = "¡Tu turno! Repite la secuencia en orden";
+                    isShowingSeq = false;
+                }
+            }, 800);
+        }
+
+        function clickSeqBtn(index) {
+            if (isShowingSeq) return;
+            seqPlayer.push(index);
+            let currentIdx = seqPlayer.length - 1;
+
+            if (seqPlayer[currentIdx] !== seqTarget[currentIdx]) {
+                document.getElementById('seq-status').innerText = "❌ Secuencia incorrecta. ¡Inténtalo de nuevo!";
+                document.getElementById('score-seq').innerText = `0 / 4`;
+                setTimeout(startSeqGame, 1500);
+                return;
+            }
+
+            if (seqPlayer.length === seqTarget.length) {
+                document.getElementById('score-seq').innerText = `4 / 4`;
+                document.getElementById('seq-status').innerText = "¡Excelente memoria de mantenimiento! 🏆";
+            }
+        }
+
+        const triviaData = [
+            {
+                q: "¿Qué significa la sigla P&ID en procesos industriales?",
+                options: ["Pipeline & Instrument Diagram", "Piping and Instrumentation Diagram", "Process & Industrial Device", "Primary & Integrated Dashboard"],
+                correct: 1
+            },
+            {
+                q: "¿Cuál es el rango estándar de corriente normalizado para lazos de control electroneumáticos?",
+                options: ["0 - 10 V", "1 - 5 mA", "4 - 20 mA", "10 - 50 mA"],
+                correct: 2
+            },
+            {
+                q: "Instrumento empleado para medir la oposición al flujo de un fluido dentro de una tubería:",
+                options: ["Transmisor de Nivel", "Manómetro Diferencial", "Medidor de Caudal (Flowmeter)", "Termorresistencia RTD"],
+                correct: 2
+            },
+            {
+                q: "¿Qué sensor de temperatura industrial estándar utiliza platino y cambia su resistencia linealmente?",
+                options: ["Termopar tipo K", "RTD Pt100", "Termistor NTC", "Pirómetro óptico"],
+                correct: 1
+            }
+        ];
+        let currentTriviaIdx = 0;
+        let triviaScoreCount = 0;
+
+        function initTriviaGame() {
+            currentTriviaIdx = 0;
+            triviaScoreCount = 0;
+            document.getElementById('score-trivia').innerText = `${triviaScoreCount} / ${triviaData.length}`;
+            loadTriviaQuestion();
+        }
+
+        function loadTriviaQuestion() {
+            if (currentTriviaIdx >= triviaData.length) {
+                document.getElementById('trivia-question').innerText = "¡Trivia Finalizada con Éxito!";
+                document.getElementById('trivia-options').innerHTML = `<div class="text-center text-purple-700 font-bold py-4">Puntuación Final: ${triviaScoreCount} / ${triviaData.length} 🌟</div>`;
+                document.getElementById('trivia-status').innerText = "¡Gran conocimiento técnico!";
+                document.getElementById('trivia-btn-next').classList.add('hidden');
+                return;
+            }
+
+            const item = triviaData[currentTriviaIdx];
+            document.getElementById('trivia-question').innerText = item.q;
+            document.getElementById('trivia-status').innerText = "Selecciona la respuesta adecuada";
+            document.getElementById('trivia-btn-next').classList.add('hidden');
+
+            const optionsContainer = document.getElementById('trivia-options');
+            optionsContainer.innerHTML = '';
+            item.options.forEach((optText, idx) => {
+                const btn = document.createElement('button');
+                btn.className = "w-full text-left p-3 bg-white hover:bg-purple-50 text-slate-700 border border-slate-200 rounded-xl font-medium transition shadow-sm";
+                btn.innerText = optText;
+                btn.onclick = () => checkTriviaAnswer(idx, item.correct, btn);
+                optionsContainer.appendChild(btn);
+            });
+        }
+
+        function checkTriviaAnswer(selectedIdx, correctIdx, btnElement) {
+            const buttons = document.getElementById('trivia-options').querySelectorAll('button');
+            buttons.forEach(b => b.disabled = true);
+
+            if (selectedIdx === correctIdx) {
+                btnElement.className = "w-full text-left p-3 bg-green-600 text-white border border-green-600 rounded-xl font-bold transition shadow-md";
+                triviaScoreCount++;
+                document.getElementById('trivia-status').innerText = "¡Respuesta Correcta!";
+            } else {
+                btnElement.className = "w-full text-left p-3 bg-red-500 text-white border border-red-500 rounded-xl font-bold transition shadow-md";
+                buttons[correctIdx].className = "w-full text-left p-3 bg-green-600 text-white border border-green-600 rounded-xl font-bold transition shadow-md";
+                document.getElementById('trivia-status').innerText = "Respuesta incorrecta.";
+            }
+            document.getElementById('score-trivia').innerText = `${triviaScoreCount} / ${triviaData.length}`;
+            document.getElementById('trivia-btn-next').classList.remove('hidden');
+        }
+
+        function nextTriviaQuestion() {
+            currentTriviaIdx++;
+            loadTriviaQuestion();
+        }
+
+        function sharePage() {
+            const pageUrl = window.location.href;
+            if (navigator.clipboard && navigator.clipboard.writeText) {
+                navigator.clipboard.writeText(pageUrl).then(() => {
+                    alertModal("¡Enlace copiado al portapapeles! Ya puedes compartirlo con tus compañeros.");
+                }).catch(() => {
+                    fallbackCopy(pageUrl);
+                });
+            } else {
+                fallbackCopy(pageUrl);
+            }
+        }
+
+        function fallbackCopy(text) {
+            const textArea = document.createElement("textarea");
+            textArea.value = text;
+            document.body.appendChild(textArea);
+            textArea.select();
+            try {
+                document.execCommand('copy');
+                alertModal("¡Enlace copiado al portapapeles!");
+            } catch (err) {
+                alertModal("Copia este enlace para compartir: " + text);
+            }
+            document.body.removeChild(textArea);
+        }
+
+        // ============================================================
+        // Carga de imágenes/videos REALES subidos al repositorio
+        // ------------------------------------------------------------
+        // Cada tarjeta intenta cargar primero un archivo propio desde las
+        // carpetas imagenes/ y videos/ del repo (ej: imagenes/f1.jpg).
+        // Si el archivo no existe todavía, prueba otras extensiones
+        // comunes y, si ninguna existe, cae al placeholder gris (o en el
+        // caso del video, simplemente no muestra nada).
+        // ============================================================
+        function handleImgError(imgEl) {
+            const step = parseInt(imgEl.dataset.step || '0', 10);
+            const base = imgEl.dataset.base;
+            if (step === 0) {
+                imgEl.dataset.step = '1';
+                imgEl.src = `${base}.png`;
+            } else if (step === 1) {
+                imgEl.dataset.step = '2';
+                imgEl.src = `${base}.jpeg`;
+            } else {
+                imgEl.onerror = null;
+                imgEl.src = imgEl.dataset.fallback;
+            }
+        }
+
+        function showStaticVideo(itemId) {
+            const container = document.getElementById(`video-container-${itemId}`);
+            const status = document.getElementById(`video-status-${itemId}`);
+            if (container) container.classList.remove('hidden');
+            if (status) {
+                status.innerHTML = '<i class="fas fa-check-circle text-green-600 mr-1"></i> Video del ejercicio';
+                status.classList.add('text-green-700');
+            }
+        }
+
+        function handleVideoError(videoEl) {
+            const step = parseInt(videoEl.dataset.step || '0', 10);
+            const base = videoEl.dataset.base;
+            if (step === 0) {
+                videoEl.dataset.step = '1';
+                videoEl.src = `${base}.webm`;
+            } else {
+                // No hay archivo de video real todavía: lo dejamos oculto
+                // (el contenedor sigue con la clase "hidden" original).
+                videoEl.removeAttribute('src');
+            }
+        }
+
+        // ============================================================
+        // Persistencia de imágenes/videos subidos (IndexedDB)
+        // ------------------------------------------------------------
+        // No hay servidor, así que los archivos que el usuario sube se
+        // guardan como Blobs en el propio navegador, en una base de
+        // datos IndexedDB local. Así sobreviven al refrescar la página.
+        // Nota: quedan guardados solo en ESE navegador/dispositivo; si
+        // abres la cartilla en otro equipo o borras datos de navegación,
+        // no aparecerán. Si en el futuro necesitas que todos los que
+        // abren el enlace vean las mismas imágenes/videos, hace falta
+        // un servidor con backend (no solo este archivo HTML).
+        // ============================================================
+        const MEDIA_DB_NAME = 'keynerMediaDB';
+        const MEDIA_STORE = 'media';
+
+        function openMediaDB() {
+            return new Promise((resolve, reject) => {
+                if (!window.indexedDB) {
+                    reject(new Error('IndexedDB no disponible en este navegador'));
+                    return;
+                }
+                const request = indexedDB.open(MEDIA_DB_NAME, 1);
+                request.onupgradeneeded = (event) => {
+                    const db = event.target.result;
+                    if (!db.objectStoreNames.contains(MEDIA_STORE)) {
+                        db.createObjectStore(MEDIA_STORE, { keyPath: 'id' });
+                    }
+                };
+                request.onsuccess = (event) => resolve(event.target.result);
+                request.onerror = (event) => reject(event.target.error);
+            });
+        }
+
+        async function saveMedia(id, type, file) {
+            try {
+                const db = await openMediaDB();
+                await new Promise((resolve, reject) => {
+                    const tx = db.transaction(MEDIA_STORE, 'readwrite');
+                    tx.objectStore(MEDIA_STORE).put({ id, type, blob: file, mime: file.type, name: file.name });
+                    tx.oncomplete = resolve;
+                    tx.onerror = (event) => reject(event.target.error);
+                });
+            } catch (err) {
+                console.error('No se pudo guardar el archivo en el navegador:', err);
+            }
+        }
+
+        async function getMedia(id) {
+            try {
+                const db = await openMediaDB();
+                return await new Promise((resolve, reject) => {
+                    const tx = db.transaction(MEDIA_STORE, 'readonly');
+                    const req = tx.objectStore(MEDIA_STORE).get(id);
+                    req.onsuccess = () => resolve(req.result || null);
+                    req.onerror = (event) => reject(event.target.error);
+                });
+            } catch (err) {
+                console.error('No se pudo leer el archivo guardado:', err);
+                return null;
+            }
+        }
+
+        async function clearAllMedia() {
+            try {
+                const db = await openMediaDB();
+                await new Promise((resolve, reject) => {
+                    const tx = db.transaction(MEDIA_STORE, 'readwrite');
+                    tx.objectStore(MEDIA_STORE).clear();
+                    tx.oncomplete = resolve;
+                    tx.onerror = (event) => reject(event.target.error);
+                });
+                return true;
+            } catch (err) {
+                console.error('No se pudo limpiar el almacenamiento:', err);
+                return false;
+            }
+        }
+
+        function confirmClearMedia() {
+            if (confirm('¿Seguro que quieres borrar todas las imágenes y videos que has subido en este navegador? Esta acción no se puede deshacer.')) {
+                clearAllMedia().then(() => {
+                    alertModal('Se borró toda la multimedia guardada. La página se recargará.');
+                    setTimeout(() => window.location.reload(), 1200);
+                });
+            }
+        }
+
+        async function restoreAllMedia() {
+            const allItems = [...dataFisicas, ...dataPosturas];
+            for (const item of allItems) {
+                const savedImg = await getMedia(`img-${item.id}`);
+                if (savedImg && savedImg.blob) {
+                    const imgElement = document.getElementById(`img-${item.id}`);
+                    if (imgElement) {
+                        imgElement.src = URL.createObjectURL(savedImg.blob);
+                        const tagElement = imgElement.parentElement.querySelector('.tag-indicador');
+                        if (tagElement) {
+                            tagElement.innerHTML = '<i class="fas fa-check-circle text-green-600 mr-1"></i> Subida';
+                            tagElement.classList.replace('text-slate-700', 'text-green-700');
+                            tagElement.classList.replace('bg-white/90', 'bg-green-50/90');
+                        }
+                    }
+                }
+
+                if (item.hasVideo !== false) {
+                    const savedVideo = await getMedia(`video-${item.id}`);
+                    if (savedVideo && savedVideo.blob) {
+                        const video = document.getElementById(`video-${item.id}-preview`);
+                        const container = document.getElementById(`video-container-${item.id}`);
+                        const status = document.getElementById(`video-status-${item.id}`);
+                        if (video && container) {
+                            video.src = URL.createObjectURL(savedVideo.blob);
+                            container.classList.remove('hidden');
+                            if (status) {
+                                status.innerHTML = '<i class="fas fa-check-circle text-green-600 mr-1"></i> Video adjuntado correctamente';
+                                status.classList.add('text-green-700');
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            renderCards('grid-fisica', dataFisicas, 'green');
+            renderCards('grid-posturas', dataPosturas, 'blue');
+            initMatchGame();
+            initCalcGame();
+            startSeqGame();
+            initTriviaGame();
+            restoreAllMedia();
+        });
+        
+        function updateCardImage(event, imgId) {
+            const file = event.target.files[0];
+            if (file) {
+                const imgElement = document.getElementById(imgId);
+                imgElement.src = URL.createObjectURL(file);
+                const tagElement = imgElement.parentElement.querySelector('.tag-indicador');
+                if(tagElement) {
+                    tagElement.innerHTML = '<i class="fas fa-check-circle text-green-600 mr-1"></i> Subida';
+                    tagElement.classList.replace('text-slate-700', 'text-green-700');
+                    tagElement.classList.replace('bg-white/90', 'bg-green-50/90');
+                }
+                saveMedia(imgId, 'image', file);
+            }
+        }
+        function updateCardVideo(event, itemId) {
+            const file = event.target.files[0];
+            if (!file) return;
+            const video = document.getElementById(`video-${itemId}-preview`);
+            const container = document.getElementById(`video-container-${itemId}`);
+            const status = document.getElementById(`video-status-${itemId}`);
+            if (video && container) {
+                video.src = URL.createObjectURL(file);
+                container.classList.remove('hidden');
+                if (status) {
+                    status.innerHTML = '<i class="fas fa-check-circle text-green-600 mr-1"></i> Video adjuntado correctamente';
+                    status.classList.add('text-green-700');
+                }
+            }
+            saveMedia(`video-${itemId}`, 'video', file);
+        }
+
+        function alertModal(message) {
+            const modalHtml = `
+            <div id="custom-alert" class="fixed inset-0 z-50 flex items-center justify-center bg-slate-900/50 backdrop-blur-sm p-4 animate-[fadeIn_0.2s_ease-out]">
+                <div class="bg-white rounded-2xl p-6 md:p-8 max-w-sm w-full shadow-2xl transform scale-100 transition-all text-center">
+                    <div class="w-16 h-16 bg-blue-50 rounded-full flex items-center justify-center mx-auto mb-4 text-brand-primary">
+                        <i class="fas fa-share-nodes text-3xl"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-slate-800 mb-2">Compartir Cartilla</h3>
+                    <p class="text-slate-600 mb-6 text-sm">${message}</p>
+                    <button onclick="document.getElementById('custom-alert').remove()" class="w-full bg-slate-800 hover:bg-slate-900 text-white font-bold py-3 px-4 rounded-xl transition duration-200 shadow-md">
+                        Entendido
+                    </button>
+                </div>
+            </div>`;
+            document.body.insertAdjacentHTML('beforeend', modalHtml);
+        }
+
+        window.alert = function(message) {
+            const modalHtml = `
+            <div id="custom-alert" class="fixed inset-0 z-50 flex items-center justify-center bg-slate-900/50 backdrop-blur-sm p-4 animate-[fadeIn_0.2s_ease-out]">
+                <div class="bg-white rounded-2xl p-6 md:p-8 max-w-sm w-full shadow-2xl transform scale-100 transition-all text-center">
+                    <div class="w-16 h-16 bg-brand-light rounded-full flex items-center justify-center mx-auto mb-4 text-brand-primary">
+                        <i class="fas fa-play-circle text-4xl"></i>
+                    </div>
+                    
+                    <p class="text-slate-600 mb-6 text-sm">${message}</p>
+                    <button onclick="document.getElementById('custom-alert').remove()" class="w-full bg-slate-800 hover:bg-slate-900 text-white font-bold py-3 px-4 rounded-xl transition duration-200 shadow-md">
+                        Entendido
+                    </button>
+                </div>
+            </div>`;
+            document.body.insertAdjacentHTML('beforeend', modalHtml);
+        };
+    </script>
+</body>
+</html>
