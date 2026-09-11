@@ -47,12 +47,9 @@
             <div class="absolute inset-0 bg-[radial-gradient(circle_at_center,_var(--tw-gradient-stops))] from-slate-700/50 via-brand-dark to-brand-dark"></div>
         </div>
         <div class="relative max-w-7xl mx-auto px-6 py-24 sm:py-32 lg:px-8 flex flex-col items-center text-center">
-            <div class="absolute top-6 right-6 z-30 flex gap-2">
+            <div class="absolute top-6 right-6 z-30">
                 <button onclick="sharePage()" class="bg-white/10 hover:bg-white/20 text-white border border-white/20 px-4 py-2 rounded-full text-sm font-semibold backdrop-blur-md transition flex items-center shadow-lg">
                     <i class="fas fa-share-nodes mr-2"></i> Compartir Cartilla
-                </button>
-                <button onclick="confirmClearMedia()" class="bg-white/10 hover:bg-white/20 text-white border border-white/20 px-4 py-2 rounded-full text-sm font-semibold backdrop-blur-md transition flex items-center shadow-lg" title="Borra las imágenes y videos que has subido en este navegador">
-                    <i class="fas fa-trash mr-2"></i> Borrar multimedia
                 </button>
             </div>
             
@@ -451,12 +448,6 @@
                 <div class="bg-white rounded-2xl shadow-lg border border-slate-100 overflow-hidden hover:shadow-2xl transition duration-300 flex flex-col group">
                     <div class="relative w-full h-48 bg-slate-200 overflow-hidden group/img">
                         <img id="img-${item.id}" src="${imgSrc}" alt="${item.title}" class="w-full h-full object-cover transition duration-500 group-hover/img:scale-105" data-base="imagenes/${item.id}" data-step="0" data-fallback="${imgFallback}" onerror="handleImgError(this)">
-                        <label for="upload-${item.id}" class="absolute inset-0 bg-slate-900/40 backdrop-blur-[2px] opacity-0 group-hover/img:opacity-100 flex items-center justify-center transition-all duration-300 cursor-pointer z-20">
-                            <div class="bg-white text-slate-800 px-4 py-2 rounded-lg font-semibold flex items-center shadow-lg transform translate-y-4 group-hover/img:translate-y-0 transition-transform duration-300">
-                                <i class="fas fa-upload mr-2 text-brand-primary"></i> Cambiar Imagen
-                            </div>
-                            <input type="file" id="upload-${item.id}" class="hidden" accept="image/*" onchange="updateCardImage(event, 'img-${item.id}')">
-                        </label>
                         <div class="absolute top-4 right-4 bg-white/90 backdrop-blur px-3 py-1 rounded-full text-xs font-bold text-slate-700 shadow-sm flex items-center z-10 pointer-events-none tag-indicador">
                             <i class="fas fa-camera mr-1"></i> Ilustrativa
                         </div>
@@ -489,14 +480,9 @@
                         </div>
                         ${item.hasVideo !== false ? `
                         <div class="mt-auto pt-4 border-t border-slate-100">
-                            <label for="video-${item.id}" class="w-full cursor-pointer inline-flex items-center justify-center gap-2 px-4 py-2.5 rounded-lg bg-slate-800 hover:bg-slate-900 text-white font-semibold text-sm transition">
-                                <i class="fas fa-video"></i> Adjuntar Video
-                            </label>
-                            <input type="file" id="video-${item.id}" class="hidden" accept="video/*" onchange="updateCardVideo(event, '${item.id}')">
-                            <div id="video-container-${item.id}" class="hidden mt-3 rounded-lg overflow-hidden bg-slate-900">
+                            <div id="video-container-${item.id}" class="hidden rounded-lg overflow-hidden bg-slate-900">
                                 <video id="video-${item.id}-preview" class="w-full max-h-56" controls playsinline preload="metadata" src="videos/${item.id}.mp4" data-base="videos/${item.id}" data-step="0" data-item-id="${item.id}" onloadedmetadata="showStaticVideo('${item.id}')" onerror="handleVideoError(this)"></video>
                             </div>
-                            <p id="video-status-${item.id}" class="text-xs text-slate-500 text-center mt-2">Puedes adjuntar un video propio del ejercicio.</p>
                         </div>` : ''}
                     </div>
                 </div>`;
@@ -832,12 +818,7 @@
 
         function showStaticVideo(itemId) {
             const container = document.getElementById(`video-container-${itemId}`);
-            const status = document.getElementById(`video-status-${itemId}`);
             if (container) container.classList.remove('hidden');
-            if (status) {
-                status.innerHTML = '<i class="fas fa-check-circle text-green-600 mr-1"></i> Video del ejercicio';
-                status.classList.add('text-green-700');
-            }
         }
 
         function handleVideoError(videoEl) {
@@ -853,129 +834,6 @@
             }
         }
 
-        // ============================================================
-        // Persistencia de imágenes/videos subidos (IndexedDB)
-        // ------------------------------------------------------------
-        // No hay servidor, así que los archivos que el usuario sube se
-        // guardan como Blobs en el propio navegador, en una base de
-        // datos IndexedDB local. Así sobreviven al refrescar la página.
-        // Nota: quedan guardados solo en ESE navegador/dispositivo; si
-        // abres la cartilla en otro equipo o borras datos de navegación,
-        // no aparecerán. Si en el futuro necesitas que todos los que
-        // abren el enlace vean las mismas imágenes/videos, hace falta
-        // un servidor con backend (no solo este archivo HTML).
-        // ============================================================
-        const MEDIA_DB_NAME = 'keynerMediaDB';
-        const MEDIA_STORE = 'media';
-
-        function openMediaDB() {
-            return new Promise((resolve, reject) => {
-                if (!window.indexedDB) {
-                    reject(new Error('IndexedDB no disponible en este navegador'));
-                    return;
-                }
-                const request = indexedDB.open(MEDIA_DB_NAME, 1);
-                request.onupgradeneeded = (event) => {
-                    const db = event.target.result;
-                    if (!db.objectStoreNames.contains(MEDIA_STORE)) {
-                        db.createObjectStore(MEDIA_STORE, { keyPath: 'id' });
-                    }
-                };
-                request.onsuccess = (event) => resolve(event.target.result);
-                request.onerror = (event) => reject(event.target.error);
-            });
-        }
-
-        async function saveMedia(id, type, file) {
-            try {
-                const db = await openMediaDB();
-                await new Promise((resolve, reject) => {
-                    const tx = db.transaction(MEDIA_STORE, 'readwrite');
-                    tx.objectStore(MEDIA_STORE).put({ id, type, blob: file, mime: file.type, name: file.name });
-                    tx.oncomplete = resolve;
-                    tx.onerror = (event) => reject(event.target.error);
-                });
-            } catch (err) {
-                console.error('No se pudo guardar el archivo en el navegador:', err);
-            }
-        }
-
-        async function getMedia(id) {
-            try {
-                const db = await openMediaDB();
-                return await new Promise((resolve, reject) => {
-                    const tx = db.transaction(MEDIA_STORE, 'readonly');
-                    const req = tx.objectStore(MEDIA_STORE).get(id);
-                    req.onsuccess = () => resolve(req.result || null);
-                    req.onerror = (event) => reject(event.target.error);
-                });
-            } catch (err) {
-                console.error('No se pudo leer el archivo guardado:', err);
-                return null;
-            }
-        }
-
-        async function clearAllMedia() {
-            try {
-                const db = await openMediaDB();
-                await new Promise((resolve, reject) => {
-                    const tx = db.transaction(MEDIA_STORE, 'readwrite');
-                    tx.objectStore(MEDIA_STORE).clear();
-                    tx.oncomplete = resolve;
-                    tx.onerror = (event) => reject(event.target.error);
-                });
-                return true;
-            } catch (err) {
-                console.error('No se pudo limpiar el almacenamiento:', err);
-                return false;
-            }
-        }
-
-        function confirmClearMedia() {
-            if (confirm('¿Seguro que quieres borrar todas las imágenes y videos que has subido en este navegador? Esta acción no se puede deshacer.')) {
-                clearAllMedia().then(() => {
-                    alertModal('Se borró toda la multimedia guardada. La página se recargará.');
-                    setTimeout(() => window.location.reload(), 1200);
-                });
-            }
-        }
-
-        async function restoreAllMedia() {
-            const allItems = [...dataFisicas, ...dataPosturas];
-            for (const item of allItems) {
-                const savedImg = await getMedia(`img-${item.id}`);
-                if (savedImg && savedImg.blob) {
-                    const imgElement = document.getElementById(`img-${item.id}`);
-                    if (imgElement) {
-                        imgElement.src = URL.createObjectURL(savedImg.blob);
-                        const tagElement = imgElement.parentElement.querySelector('.tag-indicador');
-                        if (tagElement) {
-                            tagElement.innerHTML = '<i class="fas fa-check-circle text-green-600 mr-1"></i> Subida';
-                            tagElement.classList.replace('text-slate-700', 'text-green-700');
-                            tagElement.classList.replace('bg-white/90', 'bg-green-50/90');
-                        }
-                    }
-                }
-
-                if (item.hasVideo !== false) {
-                    const savedVideo = await getMedia(`video-${item.id}`);
-                    if (savedVideo && savedVideo.blob) {
-                        const video = document.getElementById(`video-${item.id}-preview`);
-                        const container = document.getElementById(`video-container-${item.id}`);
-                        const status = document.getElementById(`video-status-${item.id}`);
-                        if (video && container) {
-                            video.src = URL.createObjectURL(savedVideo.blob);
-                            container.classList.remove('hidden');
-                            if (status) {
-                                status.innerHTML = '<i class="fas fa-check-circle text-green-600 mr-1"></i> Video adjuntado correctamente';
-                                status.classList.add('text-green-700');
-                            }
-                        }
-                    }
-                }
-            }
-        }
-
         document.addEventListener('DOMContentLoaded', () => {
             renderCards('grid-fisica', dataFisicas, 'green');
             renderCards('grid-posturas', dataPosturas, 'blue');
@@ -983,39 +841,7 @@
             initCalcGame();
             startSeqGame();
             initTriviaGame();
-            restoreAllMedia();
         });
-        
-        function updateCardImage(event, imgId) {
-            const file = event.target.files[0];
-            if (file) {
-                const imgElement = document.getElementById(imgId);
-                imgElement.src = URL.createObjectURL(file);
-                const tagElement = imgElement.parentElement.querySelector('.tag-indicador');
-                if(tagElement) {
-                    tagElement.innerHTML = '<i class="fas fa-check-circle text-green-600 mr-1"></i> Subida';
-                    tagElement.classList.replace('text-slate-700', 'text-green-700');
-                    tagElement.classList.replace('bg-white/90', 'bg-green-50/90');
-                }
-                saveMedia(imgId, 'image', file);
-            }
-        }
-        function updateCardVideo(event, itemId) {
-            const file = event.target.files[0];
-            if (!file) return;
-            const video = document.getElementById(`video-${itemId}-preview`);
-            const container = document.getElementById(`video-container-${itemId}`);
-            const status = document.getElementById(`video-status-${itemId}`);
-            if (video && container) {
-                video.src = URL.createObjectURL(file);
-                container.classList.remove('hidden');
-                if (status) {
-                    status.innerHTML = '<i class="fas fa-check-circle text-green-600 mr-1"></i> Video adjuntado correctamente';
-                    status.classList.add('text-green-700');
-                }
-            }
-            saveMedia(`video-${itemId}`, 'video', file);
-        }
 
         function alertModal(message) {
             const modalHtml = `
